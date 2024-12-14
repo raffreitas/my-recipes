@@ -2,6 +2,8 @@ using MyRecipes.API.Filters;
 using MyRecipes.API.Middleware;
 using MyRecipes.Application;
 using MyRecipes.Infrastructure;
+using MyRecipes.Infrastructure.Extensions;
+using MyRecipes.Infrastructure.Migrations;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,4 +36,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    var connectionString = builder.Configuration.GetDatabaseConnectionString();
+    var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    DatabaseMigration.Migrate(connectionString, serviceScope.ServiceProvider);
+}

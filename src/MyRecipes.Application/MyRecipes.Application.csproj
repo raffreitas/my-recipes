@@ -7,9 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MyRecipes.Communication\MyRecipes.Communication.csproj" />
     <ProjectReference Include="..\MyRecipes.Domain\MyRecipes.Domain.csproj" />
     <ProjectReference Include="..\MyRecipes.Exceptions\MyRecipes.Exceptions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+      <HintPath>..\..\..\..\.packages\NuGet\cache\microsoft.extensions.configuration.abstractions\9.0.0\lib\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

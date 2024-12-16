@@ -6,8 +6,7 @@ using MyRecipes.Communication.Responses;
 namespace MyRecipes.API.Controllers;
 
 [Route("users")]
-[ApiController]
-public class UserController : ControllerBase
+public class UserController : MyRecipesBaseController
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status201Created)]

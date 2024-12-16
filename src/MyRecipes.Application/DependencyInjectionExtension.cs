@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Application.Services.AutoMapper;
 using MyRecipes.Application.Services.Cryptography;
+using MyRecipes.Application.UseCases.Login.DoLogin;
 using MyRecipes.Application.UseCases.User.Register;
 
 namespace MyRecipes.Application;
@@ -26,6 +27,7 @@ public static class DependencyInjectionExtension
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
     }
 
     private static void AddPasswordEncripter(IServiceCollection services, IConfiguration configuration)

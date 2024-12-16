@@ -61,7 +61,7 @@ namespace MyRecipes.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-Mail already registered..
+        ///   Looks up a localized string similar to Email already registered..
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
             get {
@@ -70,7 +70,7 @@ namespace MyRecipes.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The e-mail must not be empty..
+        ///   Looks up a localized string similar to The email must not be empty..
         /// </summary>
         public static string EMAIL_EMPTY {
             get {
@@ -79,11 +79,20 @@ namespace MyRecipes.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The e-mail address is invalid..
+        ///   Looks up a localized string similar to The email address is invalid..
         /// </summary>
         public static string EMAIL_INVALID {
             get {
                 return ResourceManager.GetString("EMAIL_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid email and/or password..
+        /// </summary>
+        public static string EMAIL_OR_PASSWORD_INVALID {
+            get {
+                return ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID", resourceCulture);
             }
         }
         

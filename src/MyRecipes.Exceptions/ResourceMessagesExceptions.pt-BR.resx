@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
-    <value>E-Mail já registrado.</value>
+    <value>E-mail já registrado.</value>
   </data>
   <data name="EMAIL_EMPTY" xml:space="preserve">
     <value>O e-mail não deve estar vazio.</value>
   </data>
   <data name="EMAIL_INVALID" xml:space="preserve">
     <value>O endereço de e-mail é inválido.</value>
+  </data>
+  <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+    <value>E-mail e/ou senha inválidos.</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome não pode estar vazio.</value>

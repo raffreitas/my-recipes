@@ -4,9 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Domain.Repositories;
 using MyRecipes.Domain.Repositories.User;
+using MyRecipes.Domain.Security.Tokens;
 using MyRecipes.Infrastructure.DataAccess;
 using MyRecipes.Infrastructure.DataAccess.Repositories;
 using MyRecipes.Infrastructure.Extensions;
+using MyRecipes.Infrastructure.Security.Tokens.Access.Generator;
 using System.Reflection;
 
 namespace MyRecipes.Infrastructure;
@@ -16,6 +18,7 @@ public static class DependencyInjectionExtension
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         AddRepositories(services);
+        AddTokens(services, configuration);
 
         if (configuration.IsUnitTestEnvironment())
             return;
@@ -53,5 +56,13 @@ public static class DependencyInjectionExtension
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.GetExecutingAssembly()).For.All();
         });
+    }
+
+    private static void AddTokens(IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationTimeMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpirationTimeMinutes");
+        var signingKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
+
+        services.AddScoped<IAccessTokenGenerator>(option => new JwtTokenGenerator(expirationTimeMinutes, signingKey!));
     }
 }

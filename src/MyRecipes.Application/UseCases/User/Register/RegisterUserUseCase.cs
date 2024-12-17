@@ -4,6 +4,7 @@ using MyRecipes.Communication.Requests;
 using MyRecipes.Communication.Responses;
 using MyRecipes.Domain.Repositories;
 using MyRecipes.Domain.Repositories.User;
+using MyRecipes.Domain.Security.Tokens;
 using MyRecipes.Exceptions;
 using MyRecipes.Exceptions.ExceptionsBase;
 
@@ -16,18 +17,21 @@ internal class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IMapper _mapper;
     private readonly PasswordEncripter _passwordEncripter;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public RegisterUserUseCase(IUserWriteOnlyRepository writeOnlyRepository,
                                IUserReadOnlyRepository readOnlyRepository,
                                IMapper mapper,
                                PasswordEncripter passwordEncripter,
-                               IUnitOfWork unitOfWork)
+                               IUnitOfWork unitOfWork,
+                               IAccessTokenGenerator accessTokenGenerator)
     {
         _writeOnlyRepository = writeOnlyRepository;
         _readOnlyRepository = readOnlyRepository;
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _unitOfWork = unitOfWork;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
@@ -36,6 +40,7 @@ internal class RegisterUserUseCase : IRegisterUserUseCase
 
         var user = _mapper.Map<Domain.Entities.User>(request);
         user.Password = _passwordEncripter.Encrypt(request.Password);
+        user.UserIdentifier = Guid.NewGuid();
 
         await _writeOnlyRepository.Add(user);
 
@@ -43,7 +48,11 @@ internal class RegisterUserUseCase : IRegisterUserUseCase
 
         return new ResponseRegisteredUserJson
         {
-            Name = user.Name
+            Name = user.Name,
+            Tokens = new ResponseTokensJson
+            {
+                AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+            }
         };
     }
 

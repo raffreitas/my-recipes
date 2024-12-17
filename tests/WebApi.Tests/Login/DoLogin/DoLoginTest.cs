@@ -43,6 +43,8 @@ public class DoLoginTest : MyRecipesClassFixture
 
         responseData.RootElement.GetProperty("name").GetString()
             .Should().NotBeNullOrWhiteSpace().And.Be(_name);
+        responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString()
+            .Should().NotBeNullOrEmpty();
     }
 
     [Theory]

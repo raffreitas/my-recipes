@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MyRecipes.Application\MyRecipes.Application.csproj" />
     <ProjectReference Include="..\..\src\MyRecipes.Communication\MyRecipes.Communication.csproj" />
+    <ProjectReference Include="..\..\src\MyRecipes.Infrastructure\MyRecipes.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

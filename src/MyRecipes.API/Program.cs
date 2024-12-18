@@ -1,6 +1,7 @@
 using MyRecipes.API.Converters;
 using MyRecipes.API.Filters;
 using MyRecipes.API.Middleware;
+using MyRecipes.API.OpenApi;
 using MyRecipes.API.Token;
 using MyRecipes.Application;
 using MyRecipes.Domain.Security.Tokens;
@@ -12,13 +13,15 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new StringConverter());
 });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<OpenApiSecuritySchemeTransformer>();
+});
 
 builder.Services.AddMvc(options => options.Filters.Add<ExceptionFilter>());
 

@@ -9,6 +9,7 @@ using MyRecipes.Infrastructure.DataAccess;
 using MyRecipes.Infrastructure.DataAccess.Repositories;
 using MyRecipes.Infrastructure.Extensions;
 using MyRecipes.Infrastructure.Security.Tokens.Access.Generator;
+using MyRecipes.Infrastructure.Security.Tokens.Access.Validator;
 using System.Reflection;
 
 namespace MyRecipes.Infrastructure;
@@ -64,5 +65,6 @@ public static class DependencyInjectionExtension
         var signingKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
 
         services.AddScoped<IAccessTokenGenerator>(option => new JwtTokenGenerator(expirationTimeMinutes, signingKey!));
+        services.AddScoped<IAccessTokenValidator>(option => new JwtTokenValidator(signingKey!));
     }
 }

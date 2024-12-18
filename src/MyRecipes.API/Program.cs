@@ -1,7 +1,9 @@
 using MyRecipes.API.Converters;
 using MyRecipes.API.Filters;
 using MyRecipes.API.Middleware;
+using MyRecipes.API.Token;
 using MyRecipes.Application;
+using MyRecipes.Domain.Security.Tokens;
 using MyRecipes.Infrastructure;
 using MyRecipes.Infrastructure.Extensions;
 using MyRecipes.Infrastructure.Migrations;
@@ -22,6 +24,9 @@ builder.Services.AddMvc(options => options.Filters.Add<ExceptionFilter>());
 
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

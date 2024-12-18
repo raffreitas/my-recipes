@@ -5,11 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Domain.Repositories;
 using MyRecipes.Domain.Repositories.User;
 using MyRecipes.Domain.Security.Tokens;
+using MyRecipes.Domain.Services.LoggedUser;
 using MyRecipes.Infrastructure.DataAccess;
 using MyRecipes.Infrastructure.DataAccess.Repositories;
 using MyRecipes.Infrastructure.Extensions;
 using MyRecipes.Infrastructure.Security.Tokens.Access.Generator;
 using MyRecipes.Infrastructure.Security.Tokens.Access.Validator;
+using MyRecipes.Infrastructure.Services.LoggedUser;
 using System.Reflection;
 
 namespace MyRecipes.Infrastructure;
@@ -19,6 +21,7 @@ public static class DependencyInjectionExtension
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         AddRepositories(services);
+        AddLoggedUser(services);
         AddTokens(services, configuration);
 
         if (configuration.IsUnitTestEnvironment())
@@ -66,5 +69,10 @@ public static class DependencyInjectionExtension
 
         services.AddScoped<IAccessTokenGenerator>(option => new JwtTokenGenerator(expirationTimeMinutes, signingKey!));
         services.AddScoped<IAccessTokenValidator>(option => new JwtTokenValidator(signingKey!));
+    }
+
+    private static void AddLoggedUser(IServiceCollection services)
+    {
+        services.AddScoped<ILoggedUser, LoggedUser>();
     }
 }

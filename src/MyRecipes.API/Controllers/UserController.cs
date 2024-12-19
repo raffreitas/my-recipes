@@ -2,6 +2,7 @@
 using MyRecipes.API.Attributes;
 using MyRecipes.Application.UseCases.User.Profile;
 using MyRecipes.Application.UseCases.User.Register;
+using MyRecipes.Application.UseCases.User.Update;
 using MyRecipes.Communication.Requests;
 using MyRecipes.Communication.Responses;
 
@@ -28,5 +29,18 @@ public class UserController : MyRecipesBaseController
         var result = await userCase.Execute();
 
         return Ok(result);
+    }
+
+    [HttpPut]
+    [AuthenticatedUser]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<ResponseErrorJson>(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Update(
+        [FromServices] IUpdateUserUseCase useCase,
+        [FromBody] RequestUpdateUserJson request)
+    {
+        await useCase.Execute(request);
+
+        return NoContent();
     }
 }

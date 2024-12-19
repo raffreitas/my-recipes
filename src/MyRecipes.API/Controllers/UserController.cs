@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipes.API.Attributes;
+using MyRecipes.Application.UseCases.User.ChangePassword;
 using MyRecipes.Application.UseCases.User.Profile;
 using MyRecipes.Application.UseCases.User.Register;
 using MyRecipes.Application.UseCases.User.Update;
@@ -41,6 +42,18 @@ public class UserController : MyRecipesBaseController
     {
         await useCase.Execute(request);
 
+        return NoContent();
+    }
+
+    [HttpPut("change-password")]
+    [AuthenticatedUser]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<ResponseErrorJson>(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ChangePassword(
+        [FromServices] IChangePasswordUseCase useCase,
+        [FromBody] RequestChangePasswordJson request)
+    {
+        await useCase.Execute(request);
         return NoContent();
     }
 }

@@ -4,11 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Domain.Repositories;
 using MyRecipes.Domain.Repositories.User;
+using MyRecipes.Domain.Security.Cryptography;
 using MyRecipes.Domain.Security.Tokens;
 using MyRecipes.Domain.Services.LoggedUser;
 using MyRecipes.Infrastructure.DataAccess;
 using MyRecipes.Infrastructure.DataAccess.Repositories;
 using MyRecipes.Infrastructure.Extensions;
+using MyRecipes.Infrastructure.Security.Cryptography;
 using MyRecipes.Infrastructure.Security.Tokens.Access.Generator;
 using MyRecipes.Infrastructure.Security.Tokens.Access.Validator;
 using MyRecipes.Infrastructure.Services.LoggedUser;
@@ -23,6 +25,7 @@ public static class DependencyInjectionExtension
         AddRepositories(services);
         AddLoggedUser(services);
         AddTokens(services, configuration);
+        AddPasswordEncripter(services, configuration);
 
         if (configuration.IsUnitTestEnvironment())
             return;
@@ -75,5 +78,12 @@ public static class DependencyInjectionExtension
     private static void AddLoggedUser(IServiceCollection services)
     {
         services.AddScoped<ILoggedUser, LoggedUser>();
+    }
+
+    private static void AddPasswordEncripter(IServiceCollection services, IConfiguration configuration)
+    {
+        var additionalKey = configuration.GetValue<string>("Settings:Passwords:AdditionalKey");
+
+        services.AddScoped<IPasswordEncripter>(options => new Sha512Encripter(additionalKey!));
     }
 }

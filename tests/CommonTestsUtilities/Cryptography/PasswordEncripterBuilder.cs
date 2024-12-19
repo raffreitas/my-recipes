@@ -1,8 +1,9 @@
-﻿using MyRecipes.Application.Services.Cryptography;
+﻿using MyRecipes.Domain.Security.Cryptography;
+using MyRecipes.Infrastructure.Security.Cryptography;
 
 namespace CommonTestsUtilities.Cryptography;
 
 public class PasswordEncripterBuilder
 {
-    public static PasswordEncripter Build() => new("ABC1234");
+    public static IPasswordEncripter Build() => new Sha512Encripter("ABC1234");
 }

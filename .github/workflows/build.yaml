@@ -63,10 +63,6 @@ jobs:
 
           dotnet build
 
-          coverlet .\CovExample.Tests\bin\Debug\net6.0\CovExample.Tests.dll
-            --target "dotnet" 
-            --targetargs "test --no-build"
-            -f=opencover 
-            -o="coverage.xml"
+          coverlet .\CovExample.Tests\bin\Debug\net6.0\CovExample.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.xml"
 
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

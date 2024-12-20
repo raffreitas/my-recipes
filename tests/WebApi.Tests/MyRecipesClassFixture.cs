@@ -45,6 +45,5 @@ public class MyRecipesClassFixture : IClassFixture<CustomWebApplicationFactory>
             return;
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
     }
 }

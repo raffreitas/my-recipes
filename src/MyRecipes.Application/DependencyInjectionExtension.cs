@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Application.Services.AutoMapper;
 using MyRecipes.Application.UseCases.Login.DoLogin;
+using MyRecipes.Application.UseCases.User.ChangePassword;
 using MyRecipes.Application.UseCases.User.Profile;
 using MyRecipes.Application.UseCases.User.Register;
 using MyRecipes.Application.UseCases.User.Update;
@@ -30,5 +31,6 @@ public static class DependencyInjectionExtension
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
         services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
         services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+        services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
     }
 }

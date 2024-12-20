@@ -87,4 +87,20 @@ public class RegisterUserValidatorTest
         result.Errors.Should().ContainSingle()
             .And.Contain(e => e.ErrorMessage.EndsWith(ResourceMessagesExceptions.INVALID_PASSWORD));
     }
+
+    [Fact]
+    public void Error_Password_Empty()
+    {
+        var validator = new RegisterUserValidator();
+
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Password = string.Empty;
+
+        var result = validator.Validate(request);
+
+        result.IsValid.Should().BeFalse();
+
+        result.Errors.Should().ContainSingle()
+            .And.Contain(e => e.ErrorMessage.EndsWith(ResourceMessagesExceptions.PASSWORD_EMPTY));
+    }
 }
